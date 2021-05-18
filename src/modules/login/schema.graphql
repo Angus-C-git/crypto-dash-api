@@ -1,0 +1,11 @@
+# import Error from "../../schemas/global.graphql"
+
+# Handel error with not having Query in schema
+type Query {
+    hello2: String
+}
+
+
+type Mutation {
+    login(email: String!, password: String!): [Error!]
+}

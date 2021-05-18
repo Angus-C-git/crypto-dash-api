@@ -1,0 +1,7 @@
+# Types shared globally between resolvers
+# --> Should be modularised from here
+
+type Error {
+    relation: String!,
+    message: String!
+}
