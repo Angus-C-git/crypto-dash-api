@@ -99,8 +99,9 @@ function Coinspot(key, secret) {
 		request(`/api/ro/my/balances/`, {}, callback);
 	}
 
-	self.transactions = function(callback) {
-		request(`/api/ro/my/transactions`, {}, callback);
+	self.transactions = function(callback, startdate, enddate) {
+		let range = {startdate:startdate, enddate:enddate}
+		request(`/api/ro/my/transactions`, range, callback);
 	}
 }
 

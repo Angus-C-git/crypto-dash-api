@@ -1,0 +1,9 @@
+type Holding {
+    coin : String!,
+    value: Float!
+}
+
+
+type Query {
+    wallet: [Holding]
+}

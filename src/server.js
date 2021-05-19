@@ -38,8 +38,6 @@ const startServer = async () => {
 		port: (!port || port === "") ? 2048 : port
 	};
 
-
-
 	// Apply cookie parser middleware
 	server.express.use(cookieParser());
 	server.express.use(middleware);

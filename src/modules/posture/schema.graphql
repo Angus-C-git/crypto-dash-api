@@ -1,7 +1,7 @@
 type Posture {
-    profit: String!,
-    invest: String!,
-    worth: String!
+    profit: Float!,
+    invest: Float!,
+    worth: Float!
 }
 
 

@@ -6,11 +6,9 @@ module.exports = getTransactionTotals = async (client) => {
 			let totals = {
 				buy: 0,
 				sell: 0
-			}
+			};
+
 			let transactions = JSON.parse(data);
-
-			//console.log(" TRANSATIONS :::: \n\n", transactions);
-
 
 			transactions.buyorders.map((buyorder) => {
 				totals.buy += buyorder.audtotal;

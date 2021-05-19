@@ -1,5 +1,4 @@
-const User = require('../../entities/User');
-const authError = require('./error-constants');
+const authError = require('../../constants/error-constants');
 const getCurrentWalletValue = require('./getCurrentWalletValue');
 const getTransactionTotals = require('./getTransactionTotals');
 

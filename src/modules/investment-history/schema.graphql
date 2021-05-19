@@ -1,0 +1,10 @@
+type DataPoint {
+    month: String!,
+    buy: Float!,
+    sell: Float!
+}
+
+
+type Query {
+    investment_history: [DataPoint]
+}
