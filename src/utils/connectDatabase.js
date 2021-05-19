@@ -7,7 +7,7 @@ dotenv.config();
 * */
 
 const dbConnect = (process.env.NODE_ENV === "test") ?
-	process.env.TEST_DATABASE_CONNECT : process.env.DEV_DATABASE_CONNECT; // process.env.PROD_DATABASE_CONNECT; \\
+	process.env.TEST_DATABASE_CONNECT : process.env.PROD_DATABASE_CONNECT;  // process.env.DEV_DATABASE_CONNECT; \\
 
 
 module.exports = async function connectDatabase () {

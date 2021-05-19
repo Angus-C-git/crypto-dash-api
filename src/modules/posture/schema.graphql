@@ -1,0 +1,10 @@
+type Posture {
+    profit: String!,
+    invest: String!,
+    worth: String!
+}
+
+
+type Query {
+    posture: Posture
+}
