@@ -1,14 +1,18 @@
-const authError = require('../../constants/error-constants');
-const getTransactionTotals = require('./getTransactionsOvertime');
+const getTransactionTotals = require('../../functions/getTransactionsOvertime');
 
 const resolvers = {
 	Query: {
 		investment_history: async (_, __, {req, res, client}) => {
 
 			if (!req.userId)
-				return authError;
+				return null;
 
-			return await getTransactionTotals(client);
+			try {
+				return await getTransactionTotals(client);
+			} catch (err) {
+				console.error(`[>>] API :: investment history call failed sub API level error ${err}`);
+				return null;
+			}
 		}
 	}
 }

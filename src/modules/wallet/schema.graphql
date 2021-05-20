@@ -3,7 +3,11 @@ type Holding {
     value: Float!
 }
 
+type Wallet {
+    total: Float
+    holdings: [Holding],
+}
 
 type Query {
-    wallet: [Holding]
+    wallet: Wallet
 }

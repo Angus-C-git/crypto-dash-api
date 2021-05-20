@@ -1,7 +1,7 @@
 const hmac = require("crypto").createHmac, https = require('https');
 
 /* *
-* COIN SPOT API WRAPPER
+* COIN SPOT API CLASS
 * */
 
 function Coinspot(key, secret) {
@@ -51,6 +51,8 @@ function Coinspot(key, secret) {
 		req.end();
 	};
 
+	// RW_API CALLS
+
 	self.sendcoin = function(cointype, amount, address, callback) {
 		request('/api/my/coin/send', {cointype:cointype, amount:amount, address:address}, callback);
 	}
@@ -66,10 +68,6 @@ function Coinspot(key, secret) {
 	self.quotesell = function(cointype, amount, callback) {
 		request('/api/quote/sell', {cointype:cointype, amount:amount}, callback);
 	}
-
-	// self.balances = function(callback) {
-	// 	request('/api/my/balances', {}, callback);
-	// }
 
 	self.orders = function(cointype, callback) {
 		request('/api/orders', {cointype:cointype}, callback);
@@ -99,9 +97,27 @@ function Coinspot(key, secret) {
 		request(`/api/ro/my/balances/`, {}, callback);
 	}
 
+	self.balance = function(callback, cointype) {
+		request(`/api/ro/my/balances/${cointype}`, {}, callback);
+	}
+
 	self.transactions = function(callback, startdate, enddate) {
 		let range = {startdate:startdate, enddate:enddate}
 		request(`/api/ro/my/transactions`, range, callback);
+	}
+
+	self.openorders = function(callback) {
+		request(`/api/ro/my/transactions/open`, {}, callback);
+	}
+
+	self.withdrawals = function(callback, startdate, enddate) {
+		let range = {startdate:startdate, enddate:enddate}
+		request(`/api/ro/my/withdrawals`, range, callback);
+	}
+
+	self.deposits = function(callback, startdate, enddate) {
+		let range = {startdate:startdate, enddate:enddate}
+		request(`/api/ro/my/deposits`, range, callback);
 	}
 }
 
