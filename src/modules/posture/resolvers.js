@@ -4,7 +4,7 @@ const getTransactionTotals = require('../../functions/getTransactionTotals');
 
 const resolvers = {
 	Query: {
-		posture: async (_, __, {req, res, client}) => {
+		posture: async (_, __, {req, client}) => {
 
 			if (!req.userId)
 				return null;

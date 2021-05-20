@@ -4,7 +4,7 @@ const getCurrentWalletValue = require('../../functions/getCurrentWalletValue');
 
 const resolvers = {
 	Query: {
-		wallet: async (_, __, {req, res, client}) => {
+		wallet: async (_, __, {req, client}) => {
 
 			if (!req.userId)
 				return null;

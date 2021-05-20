@@ -2,7 +2,7 @@ const getTransactionTotals = require('../../functions/getTransactionsOvertime');
 
 const resolvers = {
 	Query: {
-		investment_history: async (_, __, {req, res, client}) => {
+		investment_history: async (_, __, {req, client}) => {
 
 			if (!req.userId)
 				return null;
