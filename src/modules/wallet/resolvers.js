@@ -1,4 +1,3 @@
-const User = require('../../entities/User');
 const getCurrentWallet = require('../../functions/getWallet');
 const getCurrentWalletValue = require('../../functions/getCurrentWalletValue');
 
