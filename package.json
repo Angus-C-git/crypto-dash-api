@@ -29,12 +29,12 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.10",
     "nodemon": "^2.0.7",
-    "dotenv": "^9.0.2",
-    "graphql-tools": "^7.0.5",
-    "yup": "^0.32.9",
     "cookie-parser": "^1.4.5",
+    "dotenv": "^9.0.2",
     "graphql": "^15.5.0",
-    "graphql-import": "^1.0.2"
+    "graphql-import": "^1.0.2",
+    "graphql-tools": "^7.0.5",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@hapi/joi": "^17.1.1",

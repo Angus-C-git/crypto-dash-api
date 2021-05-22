@@ -33,7 +33,6 @@ const server = new GraphQLServer({
 const startServer = async () => {
 
 	// prod mode switch
-	let port = process.env.PORT;
 	const options = {
 		port: process.env.PORT || 2048
 	};
