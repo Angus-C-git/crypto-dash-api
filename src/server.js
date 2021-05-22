@@ -34,7 +34,8 @@ const startServer = async () => {
 
 	// prod mode switch
 	const options = {
-		port: process.env.PORT || 2048
+		port: process.env.PORT || 2048,
+		playground: (process.env.NODE_ENV !== "production")
 	};
 
 	// Apply cookie parser middleware
