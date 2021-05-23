@@ -17,7 +17,7 @@ dotenv.config();
 
 const secret = process.env.CS_RO_SECRET; // insert your secret here
 const key = process.env.CS_RO_KEY; // insert your key here
-const client = new Coinspot(key, secret);
+const client = Coinspot(key, secret);
 
 /*
 * ::::::::::::::::::::::::::::::: SERVER INIT :::::::::::::::::::::::::::::::
@@ -36,7 +36,7 @@ const startServer = async () => {
 	// prod mode switch
 	const options = {
 		port: process.env.PORT || 2048,
-		playground: (process.env.NODE_ENV !== "production"),
+		//playground: true, //(process.env.NODE_ENV !== "production"),
 		cors: {
 			credentials: true,
 			origin: /localhost/

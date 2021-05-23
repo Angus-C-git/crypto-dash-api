@@ -10,7 +10,7 @@ const resolvers = {
 
 			try {
 				let wallet = await getCurrentWallet(client);
-				let currentWalletValue = await getCurrentWalletValue(client);
+				let currentWalletValue = Number.parseFloat(await getCurrentWalletValue(client)).toPrecision(6);
 
 				return {
 					total: currentWalletValue,

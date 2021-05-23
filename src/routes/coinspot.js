@@ -1,124 +1,117 @@
 const hmac = require("crypto").createHmac, https = require('https');
+// require("isomorphic-fetch");
+// const axios = require('axios').default;
+const fetch = require('node-fetch');
 
 /* *
 * COIN SPOT API CLASS
+*
+* TODO ::: Update other calls
 * */
 
-function Coinspot(key, secret) {
-	const self = this;
-	self.key = key;
-	self.secret = secret;
+const BASE_URL = "https://www.coinspot.com.au";
 
-	const request = function (path, postdata, callback) {
-		const nonce = new Date().getTime();
+class Coinspot {
 
+	constructor(key, secret) {
+		this.key = key;
+		this.secret = secret;
+	}
+
+	async request(endpoint, postdata) {
+		let nonce = new Date().getTime();
 		postdata = postdata || {};
 		postdata.nonce = nonce;
 
-		const stringmessage = JSON.stringify(postdata);
-		const signedMessage = new hmac("sha512", self.secret);
-
+		let stringmessage = JSON.stringify(postdata);
+		let signedMessage = new hmac("sha512", this.secret);
 		signedMessage.update(stringmessage);
+		let sign = signedMessage.digest("hex");
 
-		const sign = signedMessage.digest('hex');
-
-		const options = {
-			rejectUnauthorized: false,
-			method: 'POST',
-			host: 'www.coinspot.com.au',
-			port: 443,
-			path: path,
+		const response = await fetch(`${BASE_URL}${endpoint}`, {
+			method: "POST",
 			headers: {
-				'Content-Type': 'application/json',
-				'sign': sign,
-				'key': self.key
-			}
-		};
-
-		const req = https.request(options, function (resp) {
-			let data = '';
-			resp.on('data', function (chunk) {
-				data += chunk;
-			});
-			resp.on('end', function (chunk) {
-				callback(null, data);
-			});
-		}).on("error", function (e) {
-			callback(e, data);
+				"Content-Type": "application/json",
+				sign: sign,
+				key: this.key
+			},
+			body: JSON.stringify({nonce})
 		});
 
-		req.write(stringmessage);
-		req.end();
-	};
+		return response.json();
+	}
 
 	// RW_API CALLS
 
-	self.sendcoin = function(cointype, amount, address, callback) {
-		request('/api/my/coin/send', {cointype:cointype, amount:amount, address:address}, callback);
-	}
-
-	self.coindeposit = function(cointype, callback) {
-		request('/api/my/coin/deposit', {cointype:cointype}, callback);
-	}
-
-	self.quotebuy = function(cointype, amount, callback) {
-		request('/api/quote/buy', {cointype:cointype, amount:amount}, callback);
-	}
-
-	self.quotesell = function(cointype, amount, callback) {
-		request('/api/quote/sell', {cointype:cointype, amount:amount}, callback);
-	}
-
-	self.orders = function(cointype, callback) {
-		request('/api/orders', {cointype:cointype}, callback);
-	}
-
-	self.myorders = function(callback) {
-		request('/api/my/orders', {}, callback);
-	}
-
-	self.spot = function(callback) {
-		request('/api/spot', {}, callback);
-	}
-
-	self.buy = function(cointype, amount, rate, callback) {
-		let data = {cointype:cointype, amount:amount, rate: rate}
-		request('/api/my/buy', data, callback);
-	}
-
-	self.sell = function(cointype, amount, rate, callback) {
-		let data = {cointype:cointype, amount:amount, rate: rate}
-		request('/api/my/sell', data, callback);
-	}
+	// self.sendcoin = function(cointype, amount, address, callback) {
+	// 	request('/api/my/coin/send', {cointype:cointype, amount:amount, address:address}, callback);
+	// }
+	//
+	// self.coindeposit = function(cointype, callback) {
+	// 	request('/api/my/coin/deposit', {cointype:cointype}, callback);
+	// }
+	//
+	// self.quotebuy = function(cointype, amount, callback) {
+	// 	request('/api/quote/buy', {cointype:cointype, amount:amount}, callback);
+	// }
+	//
+	// self.quotesell = function(cointype, amount, callback) {
+	// 	request('/api/quote/sell', {cointype:cointype, amount:amount}, callback);
+	// }
+	//
+	// self.orders = function(cointype, callback) {
+	// 	request('/api/orders', {cointype:cointype}, callback);
+	// }
+	//
+	// self.myorders = function(callback) {
+	// 	request('/api/my/orders', {}, callback);
+	// }
+	//
+	// self.spot = function(callback) {
+	// 	request('/api/spot', {}, callback);
+	// }
+	//
+	// self.buy = function(cointype, amount, rate, callback) {
+	// 	let data = {cointype:cointype, amount:amount, rate: rate}
+	// 	request('/api/my/buy', data, callback);
+	// }
+	//
+	// self.sell = function(cointype, amount, rate, callback) {
+	// 	let data = {cointype:cointype, amount:amount, rate: rate}
+	// 	request('/api/my/sell', data, callback);
+	// }
 
 	// RO_API CALLS
 
-	self.balances = function(callback) {
-		request(`/api/ro/my/balances/`, {}, callback);
+	balances = () => {
+		return this.request(`/api/ro/my/balances/`, {});
 	}
 
-	self.balance = function(callback, cointype) {
-		request(`/api/ro/my/balances/${cointype}`, {}, callback);
+	balance = (cointype) => {
+		return this.request(`/api/ro/my/balances/${cointype}`, {});
 	}
 
-	self.transactions = function(callback, startdate, enddate) {
+	transactions = (startdate, enddate) => {
 		let range = {startdate:startdate, enddate:enddate}
-		request(`/api/ro/my/transactions`, range, callback);
+		return this.request(`/api/ro/my/transactions`, range);
 	}
 
-	self.openorders = function(callback) {
-		request(`/api/ro/my/transactions/open`, {}, callback);
-	}
-
-	self.withdrawals = function(callback, startdate, enddate) {
-		let range = {startdate:startdate, enddate:enddate}
-		request(`/api/ro/my/withdrawals`, range, callback);
-	}
-
-	self.deposits = function(callback, startdate, enddate) {
-		let range = {startdate:startdate, enddate:enddate}
-		request(`/api/ro/my/deposits`, range, callback);
-	}
+	//
+	// self.openorders = function(callback) {
+	// 	return request(`/api/ro/my/transactions/open`, {}, callback);
+	// }
+	//
+	// self.withdrawals = function(callback, startdate, enddate) {
+	// 	let range = {startdate:startdate, enddate:enddate}
+	// 	return request(`/api/ro/my/withdrawals`, range, callback);
+	// }
+	//
+	// self.deposits = function(callback, startdate, enddate) {
+	// 	let range = {startdate:startdate, enddate:enddate}
+	// 	return request(`/api/ro/my/deposits`, range, callback);
+	// }
 }
 
-module.exports = Coinspot;
+module.exports = (key, secret) => {
+	return new Coinspot(key, secret);
+}

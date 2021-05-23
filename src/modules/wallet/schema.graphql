@@ -1,5 +1,5 @@
 type Holding {
-    coin : String!,
+    name : String!,
     value: Float!
 }
 

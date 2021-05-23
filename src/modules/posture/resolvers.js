@@ -11,9 +11,9 @@ const resolvers = {
 
 			try {
 				const transactions = await getTransactionTotals(client);
-				const invest = transactions.buy;
-				const worth = await getCurrentWalletValue(client) + transactions.sell; // + sells
-				const profit = worth - invest;
+				const invest = Number.parseFloat(transactions.buy).toPrecision(6);
+				const worth = Number.parseFloat(await getCurrentWalletValue(client) + transactions.sell).toPrecision(6); // + sells
+				const profit = Number.parseFloat(worth - invest).toPrecision(6);
 
 				return {
 					profit: profit,
