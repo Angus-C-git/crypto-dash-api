@@ -2,6 +2,8 @@ const { GraphQLServer } = require('graphql-yoga');			// GraphQLServer variant
 
 const mongoose = require('mongoose');						// ORM
 const dotenv = require('dotenv');       					// Environment variables
+const cors = require('cors');          					    // Cross Origin Security Headers
+
 
 const genSchema = require('./utils/genSchema');				// Generate Combined Schema
 const cookieParser = require('cookie-parser');				// Cookie Parser middleware
@@ -38,6 +40,8 @@ const startServer = async () => {
 		playground: (process.env.NODE_ENV !== "production")
 	};
 
+	// Apply CORS
+	server.express.use(cors());
 	// Apply cookie parser middleware
 	server.express.use(cookieParser());
 	server.express.use(middleware);
