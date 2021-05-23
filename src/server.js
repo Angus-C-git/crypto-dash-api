@@ -2,7 +2,6 @@ const { GraphQLServer } = require('graphql-yoga');			// GraphQLServer variant
 
 const mongoose = require('mongoose');						// ORM
 const dotenv = require('dotenv');       					// Environment variables
-const cors = require('cors');          					    // Cross Origin Security Headers
 
 
 const genSchema = require('./utils/genSchema');				// Generate Combined Schema
@@ -37,11 +36,13 @@ const startServer = async () => {
 	// prod mode switch
 	const options = {
 		port: process.env.PORT || 2048,
-		playground: (process.env.NODE_ENV !== "production")
+		playground: (process.env.NODE_ENV !== "production"),
+		cors: {
+			credentials: true,
+			origin: ['http://localhost:3000', 'crypto-dash.cybernetic.coffee']
+		}
 	};
 
-	// Apply CORS
-	server.express.use(cors());
 	// Apply cookie parser middleware
 	server.express.use(cookieParser());
 	server.express.use(middleware);
