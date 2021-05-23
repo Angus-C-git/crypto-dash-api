@@ -39,7 +39,7 @@ const startServer = async () => {
 		playground: (process.env.NODE_ENV !== "production"),
 		cors: {
 			credentials: true,
-			origin: ['http://localhost:3000', 'crypto-dash.cybernetic.coffee']
+			origin: ['http://localhost:3000/', 'https://crypto-dash.cybernetic.coffee/']
 		}
 	};
 
