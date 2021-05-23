@@ -36,7 +36,7 @@ const startServer = async () => {
 	// prod mode switch
 	const options = {
 		port: process.env.PORT || 2048,
-		//playground: true, //(process.env.NODE_ENV !== "production"),
+		playground: (process.env.NODE_ENV !== "production"),
 		cors: {
 			credentials: true,
 			origin: 'https://crypto--dash.herokuapp.com'
