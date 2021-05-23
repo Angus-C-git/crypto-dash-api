@@ -39,7 +39,7 @@ const startServer = async () => {
 		//playground: true, //(process.env.NODE_ENV !== "production"),
 		cors: {
 			credentials: true,
-			origin: /localhost/
+			origin: 'https://crypto--dash.herokuapp.com'
 		}
 	};
 
