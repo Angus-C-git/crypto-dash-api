@@ -38,7 +38,8 @@ class Coinspot {
 			body: JSON.stringify({nonce})
 		});
 
-		return response.json();
+		console.log(`[>>] REQUEST CALL CS API ::: ${response.json()}`);
+		return await response.json();
 	}
 
 	// RW_API CALLS
