@@ -7,33 +7,6 @@ const fetch = require('node-fetch');
 * TODO ::: Update other calls
 * */
 
-
-async function request(endpoint, postdata, key, secret) {
-	let nonce = new Date().getTime();
-	postdata = postdata || {};
-	postdata.nonce = nonce;
-
-	let stringmessage = JSON.stringify(postdata);
-	let signedMessage = new hmac("sha512", secret);
-	signedMessage.update(stringmessage);
-	let sign = signedMessage.digest("hex");
-
-	const response = await fetch(`${BASE_URL}${endpoint}`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			sign: sign,
-			key: key
-		},
-		body: JSON.stringify({nonce})
-	});
-
-	console.log(`[>>] REQUEST CALL CS API ::: ${response.json()}`);
-	return await response.json();
-}
-
-
-
 const BASE_URL = "https://www.coinspot.com.au";
 
 class Coinspot {
@@ -41,6 +14,32 @@ class Coinspot {
 	constructor(key, secret) {
 		this.key = key;
 		this.secret = secret;
+	}
+
+	async request(endpoint, postdata) {
+		let nonce = new Date().getTime();
+		postdata = postdata || {};
+		postdata.nonce = nonce;
+
+		let stringmessage = JSON.stringify(postdata);
+		let signedMessage = new hmac("sha512", this.secret);
+		signedMessage.update(stringmessage);
+		let sign = signedMessage.digest("hex");
+
+		const response = await fetch(`${BASE_URL}${endpoint}`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				sign: sign,
+				key: this.key
+			},
+			body: JSON.stringify({nonce})
+		});
+
+		const data = await response.json();
+
+		console.log(`[>>] REQUEST CALL CS API ::: ${data}`);
+		return data;
 	}
 
 	// RW_API CALLS
@@ -86,16 +85,16 @@ class Coinspot {
 	// RO_API CALLS
 
 	balances = async() => {
-		return await this.request(`/api/ro/my/balances/`, {}, this.key, this.secret);
+		return await this.request(`/api/ro/my/balances/`, {});
 	}
 
 	balance = async(cointype) => {
-		return await this.request(`/api/ro/my/balances/${cointype}`, {}, this.key, this.secret);
+		return await this.request(`/api/ro/my/balances/${cointype}`, {});
 	}
 
 	transactions = async(startdate, enddate) => {
 		let range = {startdate:startdate, enddate:enddate}
-		return await this.request(`/api/ro/my/transactions`, range, this.key, this.secret);
+		return await this.request(`/api/ro/my/transactions`, range);
 	}
 
 	//
