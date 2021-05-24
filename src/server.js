@@ -39,7 +39,7 @@ const startServer = async () => {
 		playground: (process.env.NODE_ENV !== "production"),
 		cors: {
 			credentials: true,
-			origin: 'https://crypto--dash.herokuapp.com'
+			origin: ['https://crypto--dash.herokuapp.com', 'https://crypt0dash.web.app/', 'https://crypt0dash.firebaseapp.com/']
 		}
 	};
 
