@@ -16,9 +16,9 @@ class Coinspot {
 		this.secret = secret;
 	}
 
-	async request(endpoint, postdata) {
+	async request(endpoint, postData) {
 		let nonce = new Date().getTime();
-		postdata = postdata || {};
+		let postdata = postData || {};
 		postdata.nonce = nonce;
 
 		let stringmessage = JSON.stringify(postdata);
@@ -38,7 +38,12 @@ class Coinspot {
 
 		const data = await response.json();
 
-		console.log(`[>>] REQUEST CALL CS API ::: ${JSON.stringify(data)}`);
+		if (data.status === 'error') {
+			console.log(`[>>] REQUEST CALL CS FAILED :::::: ${JSON.stringify(data)}`);
+			return await this.request(endpoint, postData);
+		}
+
+		console.log(`[>>] REQUEST CALL CS API ::: SUCCESS`);
 		return data;
 	}
 
