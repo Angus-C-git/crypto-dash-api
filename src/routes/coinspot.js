@@ -43,7 +43,6 @@ class Coinspot {
 			return await this.request(endpoint, postData);
 		}
 
-		console.log(`[>>] REQUEST CALL CS API ::: SUCCESS`);
 		return data;
 	}
 
