@@ -7,7 +7,6 @@ module.exports = createTokens = (user) => {
 		process.env.JWT_SECRET,
 		{
 			expiresIn: "14d",
-			sameSite: "none",
 			secure: true,
 			httpOnly: true
 		}
@@ -18,7 +17,6 @@ module.exports = createTokens = (user) => {
 		process.env.JWT_SECRET,
 		{
 			expiresIn: "2d",
-			sameSite: "none",
 			secure: true,
 			httpOnly: true
 		}
