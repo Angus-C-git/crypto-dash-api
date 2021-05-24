@@ -83,17 +83,17 @@ class Coinspot {
 
 	// RO_API CALLS
 
-	balances = () => {
-		return this.request(`/api/ro/my/balances/`, {});
+	balances = async() => {
+		return await this.request(`/api/ro/my/balances/`, {});
 	}
 
-	balance = (cointype) => {
-		return this.request(`/api/ro/my/balances/${cointype}`, {});
+	balance = async(cointype) => {
+		return await this.request(`/api/ro/my/balances/${cointype}`, {});
 	}
 
-	transactions = (startdate, enddate) => {
+	transactions = async(startdate, enddate) => {
 		let range = {startdate:startdate, enddate:enddate}
-		return this.request(`/api/ro/my/transactions`, range);
+		return await this.request(`/api/ro/my/transactions`, range);
 	}
 
 	//
