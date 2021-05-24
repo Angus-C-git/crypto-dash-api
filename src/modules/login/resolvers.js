@@ -71,21 +71,8 @@ const resolvers = {
 
 			const { accessToken, refreshToken } = createTokens(user);
 
-			// Gen tokens
-			// const refreshToken = jwt.sign(
-			// 	{_id: user._id, count: user.count}, process.env.JWT_SECRET, {expiresIn: '14d'}
-			// );
-
-			// const accessToken = jwt.sign(
-			// 	{_id: user._id}, process.env.JWT_SECRET, {expiresIn: '2d'}
-			// );
 			res.cookie("refresh-token", refreshToken);
 			res.cookie("access-token", accessToken);
-
-			// 14 day expiry
-			// res.cookie('refresh-token', refreshToken, {expire: 60*60*24*14});
-			// res.cookie('access-token', accessToken, {expire: 60*60*24*2});
-
 
 			return [
 				{

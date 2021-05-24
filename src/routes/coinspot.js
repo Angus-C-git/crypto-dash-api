@@ -4,7 +4,6 @@ const fetch = require('node-fetch');
 /* *
 * COIN SPOT API CLASS
 *
-* TODO ::: Update other calls
 * */
 
 const BASE_URL = "https://www.coinspot.com.au";
@@ -48,43 +47,43 @@ class Coinspot {
 
 	// RW_API CALLS
 
-	// self.sendcoin = function(cointype, amount, address, callback) {
-	// 	request('/api/my/coin/send', {cointype:cointype, amount:amount, address:address}, callback);
-	// }
-	//
-	// self.coindeposit = function(cointype, callback) {
-	// 	request('/api/my/coin/deposit', {cointype:cointype}, callback);
-	// }
-	//
-	// self.quotebuy = function(cointype, amount, callback) {
-	// 	request('/api/quote/buy', {cointype:cointype, amount:amount}, callback);
-	// }
-	//
-	// self.quotesell = function(cointype, amount, callback) {
-	// 	request('/api/quote/sell', {cointype:cointype, amount:amount}, callback);
-	// }
-	//
-	// self.orders = function(cointype, callback) {
-	// 	request('/api/orders', {cointype:cointype}, callback);
-	// }
-	//
-	// self.myorders = function(callback) {
-	// 	request('/api/my/orders', {}, callback);
-	// }
-	//
-	// self.spot = function(callback) {
-	// 	request('/api/spot', {}, callback);
-	// }
-	//
-	// self.buy = function(cointype, amount, rate, callback) {
-	// 	let data = {cointype:cointype, amount:amount, rate: rate}
-	// 	request('/api/my/buy', data, callback);
-	// }
-	//
-	// self.sell = function(cointype, amount, rate, callback) {
-	// 	let data = {cointype:cointype, amount:amount, rate: rate}
-	// 	request('/api/my/sell', data, callback);
-	// }
+	sendcoin = async(cointype, amount, address, callback) => {
+		return await this.request('/api/my/coin/send', {cointype:cointype, amount:amount, address:address}, callback);
+	}
+
+	coindeposit = async(cointype, callback) => {
+		return await this.request('/api/my/coin/deposit', {cointype:cointype}, callback);
+	}
+
+	quotebuy = async(cointype, amount, callback) => {
+		return await this.request('/api/quote/buy', {cointype:cointype, amount:amount}, callback);
+	}
+
+	quotesell = async(cointype, amount, callback) => {
+		return await this.request('/api/quote/sell', {cointype:cointype, amount:amount}, callback);
+	}
+
+	orders = async(cointype, callback) => {
+		return await this.request('/api/orders', {cointype:cointype}, callback);
+	}
+
+	myorders = async(callback) => {
+		return await this.request('/api/my/orders', {}, callback);
+	}
+
+	spot = async(callback) => {
+		return await this.request('/api/spot', {}, callback);
+	}
+
+	buy = async(cointype, amount, rate, callback) => {
+		let data = {cointype:cointype, amount:amount, rate: rate}
+		return await this.request('/api/my/buy', data, callback);
+	}
+
+	sell = async(cointype, amount, rate, callback) => {
+		let data = {cointype:cointype, amount:amount, rate: rate}
+		return await this.request('/api/my/sell', data, callback);
+	}
 
 	// RO_API CALLS
 
@@ -101,21 +100,21 @@ class Coinspot {
 		return await this.request(`/api/ro/my/transactions`, range);
 	}
 
-	//
-	// self.openorders = function(callback) {
-	// 	return request(`/api/ro/my/transactions/open`, {}, callback);
-	// }
-	//
-	// self.withdrawals = function(callback, startdate, enddate) {
-	// 	let range = {startdate:startdate, enddate:enddate}
-	// 	return request(`/api/ro/my/withdrawals`, range, callback);
-	// }
-	//
-	// self.deposits = function(callback, startdate, enddate) {
-	// 	let range = {startdate:startdate, enddate:enddate}
-	// 	return request(`/api/ro/my/deposits`, range, callback);
-	// }
+	openorders = async(callback) => {
+		return await this.request(`/api/ro/my/transactions/open`, {}, callback);
+	}
+
+	withdrawals = async(callback, startdate, enddate) => {
+		let range = {startdate:startdate, enddate:enddate}
+		return this.request(`/api/ro/my/withdrawals`, range, callback);
+	}
+
+	deposits = async(callback, startdate, enddate) => {
+		let range = {startdate:startdate, enddate:enddate}
+		return this.request(`/api/ro/my/deposits`, range, callback);
+	}
 }
+
 
 module.exports = (key, secret) => {
 	return new Coinspot(key, secret);
