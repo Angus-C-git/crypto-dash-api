@@ -38,7 +38,7 @@ class Coinspot {
 
 		const data = await response.json();
 
-		console.log(`[>>] REQUEST CALL CS API ::: ${data}`);
+		console.log(`[>>] REQUEST CALL CS API ::: ${JSON.stringify(data)}`);
 		return data;
 	}
 
