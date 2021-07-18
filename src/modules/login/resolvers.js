@@ -71,8 +71,19 @@ const resolvers = {
 
 			const { accessToken, refreshToken } = createTokens(user);
 
-			res.cookie("refresh-token", refreshToken);
-			res.cookie("access-token", accessToken);
+			res.cookie("refresh-token", refreshToken, {
+				path: "/",
+				httpOnly: true,
+				secure: true,
+				maxAge: 1000 * 60 * 60 * 24 * 7
+			});
+
+			res.cookie("access-token", accessToken, {
+				path: "/",
+				httpOnly: true,
+				secure: true,
+				maxAge: 1000 * 60 * 60 * 24 * 2
+			});
 
 			return [
 				{

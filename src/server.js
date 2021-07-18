@@ -46,6 +46,7 @@ const startServer = async () => {
 	// Apply cookie parser middleware
 	server.express.use(cookieParser());
 	server.express.use(middleware);
+	server.express.set("trust proxy", 1);
 
 
 	await server.start(options, ({ port }) => {
